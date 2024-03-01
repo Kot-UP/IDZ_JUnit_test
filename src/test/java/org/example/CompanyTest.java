@@ -3,25 +3,36 @@ package org.example;
 import org.example.taxes.TaxIncome;
 import org.example.taxes.TaxSystem;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import javax.management.ConstructorParameters;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CompanyTest {
+    TaxSystem taxSystem = new TaxIncome();
+    Company com = new Company("Fox", taxSystem);
 
     @Test
     void shiftMoney() {
-        TaxSystem taxSystem = new TaxIncome();
-        Company com = new Company("Fox", TaxSystem taxSystem);
-        int sum = com.shiftMoney(25);
-        Assertions.assertEquals(25, sum);
+        com.shiftMoney(25);
+        assertEquals(25, com.debit);
     }
 
     @Test
     void payTaxes() {
+        int sum = taxSystem.calcTaxFor(1000, 300);
+        Assertions.assertEquals(0, com.credit);
     }
 
     @Test
     void applyDeals() {
+        com.applyDeals((new Deal[] {
+                new Sale("Лимоны", 1000)}));
+        Assertions.assertEquals(0, com.credit);
     }
 }
