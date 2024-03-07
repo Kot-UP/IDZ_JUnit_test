@@ -6,10 +6,10 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TestCalculator {
+class CalculatorTest {
     Calculator calc = Calculator.instance.get();
     @Test
-    public void devide() {
+    public void testDevide() {
         int a = 2;
         int b = 0;
 
@@ -23,7 +23,7 @@ class TestCalculator {
             "3, true",
             "-1, false"
     })
-    public void ParameterizedTest(int a, boolean expected) {
+    public void parameterizedTestIsPositive(int a, boolean expected) {
         boolean x = calc.isPositive.test(a);
         assertEquals(expected, x);
     }
